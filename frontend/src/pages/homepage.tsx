@@ -57,11 +57,11 @@ const Features: Feature[] = [
 const Homepage = () => {
     return (
         <div className="pt-5 bg-[#F1F5F9]">
-            <div className="md:flex gap-5 px-5 md:pb-5">
+            <div className="md:flex gap-5 px-5 md:pb-5 lg:justify-between xl:px-16">
                 <div className="mb-5 md:w-lg md:mt-10 lg:w-1/3">
-                    <h2 className="text-[#1E3A8A] text-lg mb-2 md:mb-5 lg:text-xl">Analyze sprint techniques like<br /> never before</h2>
-                    <p className="text-sm mb-3 text-[#6B7280] md:mb-10 lg:text-lg lg:leading-8">SprintScope gives coaches the tools to analyze, annotate, and improve athlete performance with frame-by-frame video analysis for 100m sprint.</p>
-                    <Link to="/signup" className="bg-[#F97316] text-white px-6 py-2 rounded-md lg:text-lg">
+                    <h2 className="text-[#1E3A8A] font-extrabold text-lg mb-2 md:mb-5 lg:text-xl xl:text-2xl">Analyze sprint techniques like<br /> never before</h2>
+                    <p className="text-sm mb-3 text-[#6B7280] md:mb-10 lg:text-lg lg:leading-8 xl:text-xl">SprintScope gives coaches the tools to analyze, annotate, and improve athlete performance with frame-by-frame video analysis for 100m sprint.</p>
+                    <Link to="/signup" className="bg-[#F97316] text-white px-6 py-2 rounded-md lg:text-lg xl:px-8 xl:py-3">
                         Get Started
                     </Link>
                 </div>
@@ -70,9 +70,9 @@ const Homepage = () => {
                     <img src="https://res.cloudinary.com/doijevrqo/image/upload/v1749746465/Rectangle_13_ftohss.png" alt="Sprint analysis" className="hidden md:block" />
                 </div>
             </div>
-            <div className="py-5 mt-5 rounded-md bg-white shadow-t-md">
+            <div className="py-5 mt-5 rounded-md bg-white shadow-t-md xl:px-16">
                 {Features.map((feature: Feature, index: number) => (
-                    <div key={index} className="mb-6 md:mt-5">
+                    <div key={index} className="mb-6 md:mt-5 xl:mt-7 xl:mb-10">
                         <div className="flex items-start px-5 space-x-4 md:w-1/2">
                             <div className="text-2xl font-bold bg-[#1E3A8A] text-white p-5 rounded-full flex items-center justify-center w-12 h-12">
                                 {feature.number}
@@ -88,7 +88,7 @@ const Homepage = () => {
             <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
                 <h2 className="text-lg font-bold text-center text-[#1F2937]">Trusted by Thousands of Coaches</h2>
 
-                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:gap-20">
+                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:gap-20 xl:px-10">
                     {Reviews.map((review: Review, index: number) => (
                         <div key={index} className="rounded-xl shadow-md p-6 bg-white border border-gray-100">
                             <p className="text-md text-gray-600 mb-4 italic">"{review.review}"</p>

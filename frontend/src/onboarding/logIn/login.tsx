@@ -30,7 +30,7 @@ const Login: React.FC = () => {
         if (valid) {
             setMail("");
             setPassword("");
-            navigate("/");
+            navigate("/dashboard");
         }
 
     };
