@@ -3,6 +3,7 @@ import Dashboard from "./pages/dashboard";
 import Homepage from "./pages/homepage";
 import Login from "./onboarding/logIn/login";
 import SignUp from "./onboarding/signUp/signup";
+import UploadVideo from "./pages/uploadVideo";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
       <Route
         path="/dashboard"
         element={isAuthenticated ? <Navigate to="/" /> : <Dashboard />}
+      />
+      <Route
+        path="/uploadvideo"
+        element={isAuthenticated ? <Navigate to="/" /> : <UploadVideo />}
       />
     </Routes>
   );
