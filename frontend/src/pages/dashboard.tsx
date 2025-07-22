@@ -1,5 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { videoData } from "./index";
 
 const Dashboard = () => {
@@ -48,7 +49,7 @@ const Dashboard = () => {
             <nav className="bg-[#1E3A8A] text-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex-shrink-0 text-xl font-bold">SprintScope</div>
+                        <div className="flex-shrink-0 text-xl font-bold">Sprint<span className="text-[#F97316]">Scope</span></div>
                         <div className="hidden md:flex space-x-6 items-center">
                             <a href="#" className="hover:underline">Athletes</a>
                             <a href="#" className="hover:underline">Add Athlete</a>
@@ -86,9 +87,9 @@ const Dashboard = () => {
 
                     <div className="flex justify-between mt-10">
                         <p className="text-[#1F2937] text-lg font-bold">Recent Videos</p>
-                        <button className="bg-[#F97316] text-white text-sm py-2 px-4 rounded-md hover:bg-orange-500 transition">
+                        <Link to="/uploadvideo" className="bg-[#F97316] text-white text-sm py-2 px-4 rounded-md hover:bg-orange-500 transition">
                             Upload New Video
-                        </button>
+                        </Link>
                     </div>
 
                     <div className="mt-6 w-full flex flex-wrap gap-6">

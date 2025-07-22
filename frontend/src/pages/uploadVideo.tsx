@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const UploadVideo = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -63,29 +64,24 @@ const UploadVideo = () => {
         const existingData = JSON.parse(localStorage.getItem("athleteVideos") || "[]");
         localStorage.setItem("athleteVideos", JSON.stringify([...existingData, videoData]));
 
-        // Navigate to dashboard video section
         navigate("/dashboard/athletes/videos");
     };
 
     return (
         <>
-            {/* NAVBAR */}
             <nav className="bg-[#1E3A8A] text-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="text-xl font-bold flex-shrink-0">
                             Sprint<span className="text-[#F97316]">Scope</span>
                         </div>
-                        <ul className="hidden md:flex space-x-6 items-center">
-                            <li><a href="#" className="hover:underline">Athletes</a></li>
-                            <li><a href="#" className="hover:underline">Add Athlete</a></li>
-                            <li><a href="#" className="hover:underline">Settings</a></li>
-                            <li>
-                                <button className="bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
-                                    Coach Smith
-                                </button>
-                            </li>
-                        </ul>
+                        <div className="hidden md:flex space-x-6 items-center">
+                            <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+                            <Link to="/settings" className="hover:underline">Settings</Link>
+                            <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-gray-100 transition">
+                                Coach Smith
+                            </button>
+                        </div>
                         <div className="md:hidden">
                             <button onClick={toggleMenu} className="focus:outline-none">
                                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -95,8 +91,9 @@ const UploadVideo = () => {
                 </div>
                 {isOpen && (
                     <ul className="md:hidden px-4 pt-2 pb-4 space-y-2 bg-[#1E3A8A]">
-                        <li><a href="#" className="block hover:underline">Dashboard</a></li>
-                        <li><a href="#" className="block hover:underline">Settings</a></li>
+                        <Link to="/dashboard" className="hover:underline">
+                            Dashboard
+                        </Link>                        <li><a href="#" className="block hover:underline">Settings</a></li>
                         <li>
                             <button className="w-full text-left bg-white text-[#1E3A8A] px-4 py-2 rounded-full font-semibold shadow hover:bg-gray-100 transition">
                                 Coach Smith
@@ -120,16 +117,19 @@ const UploadVideo = () => {
                     className={`border-2 border-dashed rounded-lg p-10 text-center transition-all ${dragActive ? "border-orange-500 bg-orange-50" : "border-gray-300 bg-white"
                         }`}
                 >
-                    <p className="text-gray-500 mb-4">
-                        Drag & drop your sprint video here,
-                        <button
-                            onClick={() => fileInputRef.current?.click()}
-                            className="text-[#6B7280] font-semibold hover:underline my-2 block"
-                        >
-                            or click to browse your file
-                        </button>
-                        <span className="block text-sm text-gray-400">Supports MP4, MOV, AVI up to 500MB</span>
-                    </p>
+                    <div className="flex flex-col items-center justify-center">
+                        <img src="https://res.cloudinary.com/doijevrqo/image/upload/v1753146759/file_folder_btyhgh.png" alt="upload file" />
+                        <p className="text-gray-500 mb-4">
+                            Drag & drop your sprint video here,
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className="text-[#6B7280] font-semibold hover:underline my-2 block"
+                            >
+                                or click to browse your file
+                            </button>
+                            <span className="block text-sm text-gray-400">Supports MP4, MOV, AVI up to 500MB</span>
+                        </p>
+                    </div>
                     <input
                         ref={fileInputRef}
                         type="file"
