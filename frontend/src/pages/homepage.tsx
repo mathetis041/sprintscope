@@ -65,15 +65,21 @@ const Homepage = () => {
             <nav className="bg-[#1E3A8A] text-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex-shrink-0 text-xl font-bold">Sprint<span className="text-[#F97316]">Scope</span></div>
-                        <div className="hidden md:flex space-x-6 items-center">
+                        <div className="text-xl font-bold">
+                            Sprint<span className="text-[#F97316]">Scope</span>
+                        </div>
+
+                        {/* Desktop Nav */}
+                        <div className="hidden md:flex items-center space-x-6">
                             <Link to="/" className="hover:underline">Features</Link>
                             <Link to="/" className="hover:underline">About</Link>
                             <Link to="/" className="hover:underline">Contact</Link>
-                            <Link to="/login" className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-gray-100 transition">
+                            <Link to="/login" className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
                                 Sign In
                             </Link>
                         </div>
+
+                        {/* Mobile Menu Button */}
                         <div className="md:hidden">
                             <button onClick={toggleMenu} className="focus:outline-none">
                                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -82,13 +88,15 @@ const Homepage = () => {
                     </div>
                 </div>
 
+                {/* Mobile Nav Links */}
                 {isOpen && (
-                    <div className="hidden md:flex space-x-6 items-center">
-                        <Link to="/dashboard" className="hover:underline">Dashboard</Link>
-                        <Link to="/settings" className="hover:underline">Settings</Link>
-                        <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-gray-100 transition">
-                            Coach Smith
-                        </button>
+                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                        <Link to="/" className="hover:underline">Features</Link>
+                        <Link to="/" className="hover:underline">About</Link>
+                        <Link to="/" className="hover:underline">Contact</Link>
+                        <Link to="/login" className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
+                            Sign In
+                        </Link>
                     </div>
                 )}
             </nav>
@@ -143,8 +151,46 @@ const Homepage = () => {
                         Sign in
                     </Link>
                 </div>
-
             </div>
+            <footer className="bg-[#111827] text-white">
+                <div className=" py-6 px-5 xl:px-16">
+                    <div className="text-2xl font-bold pb-14 pt-5">
+                        Sprint<span className="text-[#F97316]">Scope</span>
+                    </div>
+                    <div className="flex xs:flex-col md:flex-row space-x-12 mb-6">
+                        <div>
+                            <p className="text-xl">Product</p>
+                            <ul className="text-[#6B7280]">
+                                <li className="py-3">Feature</li>
+                                <li className="py-3">Get Started</li>
+                                <li className="py-3">Case Studies</li>
+                                <li className="py-3">Reviews</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="text-xl">Product</p>
+                            <ul className="text-[#6B7280]">
+                                <li className="py-3">Feature</li>
+                                <li className="py-3">Get Started</li>
+                                <li className="py-3">Case Studies</li>
+                                <li className="py-3">Reviews</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="text-xl">Product</p>
+                            <ul className="text-[#6B7280]">
+                                <li className="py-3">Feature</li>
+                                <li className="py-3">Get Started</li>
+                                <li className="py-3">Case Studies</li>
+                                <li className="py-3">Reviews</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="w-full px-4 sm:px-6 lg:px-8 text-center py-10 border-t-2 border-t-[#FFFFFF]">
+                    <p className="text-sm">© 2025 Brand. All rights reserved.</p>
+                </div>
+            </footer>
         </>
     )
 }

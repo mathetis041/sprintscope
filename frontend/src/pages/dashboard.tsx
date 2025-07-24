@@ -49,15 +49,20 @@ const Dashboard = () => {
             <nav className="bg-[#1E3A8A] text-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex-shrink-0 text-xl font-bold">Sprint<span className="text-[#F97316]">Scope</span></div>
-                        <div className="hidden md:flex space-x-6 items-center">
-                            <a href="#" className="hover:underline">Athletes</a>
-                            <a href="#" className="hover:underline">Add Athlete</a>
-                            <a href="#" className="hover:underline">Settings</a>
-                            <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-gray-100 transition">
-                                Coach Smith
-                            </button>
+                        <div className="text-xl font-bold">
+                            Sprint<span className="text-[#F97316]">Scope</span>
                         </div>
+
+                        {/* Desktop Nav */}
+                        <div className="hidden md:flex items-center space-x-6">
+                            <Link to="/" className="hover:underline">Athletes</Link>
+                            <Link to="/" className="hover:underline">Add Athletes</Link>
+                            <Link to="/" className="hover:underline">Settings</Link>
+                            <Link to="/login" className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
+                                Coach Smith                            </Link>
+                        </div>
+
+                        {/* Mobile Menu Button */}
                         <div className="md:hidden">
                             <button onClick={toggleMenu} className="focus:outline-none">
                                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -66,14 +71,14 @@ const Dashboard = () => {
                     </div>
                 </div>
 
+                {/* Mobile Nav Links */}
                 {isOpen && (
-                    <div className="md:hidden px-4 pt-2 pb-4 space-y-2 bg-[#1E3A8A]">
-                        <a href="#" className="block hover:underline">Athletes</a>
-                        <a href="#" className="block hover:underline">Add Athlete</a>
-                        <a href="#" className="block hover:underline">Settings</a>
-                        <button className="w-full text-left bg-white text-[#1E3A8A] px-4 py-2 rounded-full font-semibold shadow hover:bg-gray-100 transition">
-                            Coach Smith
-                        </button>
+                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                        <Link to="/" className="hover:underline">Athletes</Link>
+                        <Link to="/" className="hover:underline">Add Athletes</Link>
+                        <Link to="/" className="hover:underline">Settings</Link>
+                        <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
+                            Coach Smith                        </button>
                     </div>
                 )}
             </nav>

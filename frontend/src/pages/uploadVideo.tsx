@@ -90,16 +90,12 @@ const UploadVideo = () => {
                     </div>
                 </div>
                 {isOpen && (
-                    <ul className="md:hidden px-4 pt-2 pb-4 space-y-2 bg-[#1E3A8A]">
-                        <Link to="/dashboard" className="hover:underline">
-                            Dashboard
-                        </Link>                        <li><a href="#" className="block hover:underline">Settings</a></li>
-                        <li>
-                            <button className="w-full text-left bg-white text-[#1E3A8A] px-4 py-2 rounded-full font-semibold shadow hover:bg-gray-100 transition">
-                                Coach Smith
-                            </button>
-                        </li>
-                    </ul>
+                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                        <Link to="/" className="hover:underline">Dashboard</Link>
+                        <Link to="/" className="hover:underline">Settings</Link>
+                        <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
+                            Coach Smith                        </button>
+                    </div>
                 )}
             </nav>
 
