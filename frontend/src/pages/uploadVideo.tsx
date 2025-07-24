@@ -90,7 +90,7 @@ const UploadVideo = () => {
                     </div>
                 </div>
                 {isOpen && (
-                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                    <div className="md:hidden absolute top-16 left-0 w-full bg-[#1E3A8A] px-4 py-4 space-y-3 flex flex-col shadow-md z-50">
                         <Link to="/" className="hover:underline">Dashboard</Link>
                         <Link to="/" className="hover:underline">Settings</Link>
                         <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">

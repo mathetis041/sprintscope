@@ -46,7 +46,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <nav className="bg-[#1E3A8A] text-white shadow-md">
+            <nav className="bg-[#1E3A8A] text-white shadow-md relative z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="text-xl font-bold">
@@ -58,8 +58,12 @@ const Dashboard = () => {
                             <Link to="/" className="hover:underline">Athletes</Link>
                             <Link to="/" className="hover:underline">Add Athletes</Link>
                             <Link to="/" className="hover:underline">Settings</Link>
-                            <Link to="/login" className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
-                                Coach Smith                            </Link>
+                            <Link
+                                to="/login"
+                                className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition"
+                            >
+                                Coach Smith
+                            </Link>
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -71,17 +75,19 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                {/* Mobile Nav Links */}
+                {/* Mobile Nav Links as Overlay */}
                 {isOpen && (
-                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                    <div className="absolute top-full left-0 w-full bg-[#1E3A8A] px-4 py-4 space-y-3 flex flex-col shadow-md z-50">
                         <Link to="/" className="hover:underline">Athletes</Link>
                         <Link to="/" className="hover:underline">Add Athletes</Link>
                         <Link to="/" className="hover:underline">Settings</Link>
                         <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
-                            Coach Smith                        </button>
+                            Coach Smith
+                        </button>
                     </div>
                 )}
             </nav>
+
 
             <div className="p-5">
                 <div>

@@ -90,7 +90,7 @@ const Homepage = () => {
 
                 {/* Mobile Nav Links */}
                 {isOpen && (
-                    <div className="md:hidden bg-[#1E3A8A] px-4 pb-4 space-y-3 flex flex-col">
+                    <div className="md:hidden absolute top-16 left-0 w-full bg-[#1E3A8A] px-4 py-4 space-y-3 flex flex-col shadow-md z-50">
                         <Link to="/" className="hover:underline">Features</Link>
                         <Link to="/" className="hover:underline">About</Link>
                         <Link to="/" className="hover:underline">Contact</Link>
