@@ -1,32 +1,17 @@
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { videoData } from "./index";
+import { VideoContext } from "../useContext/videoContext";
 
 const Dashboard = () => {
 
-    type Video = {
-        src: string;
-        title?: string;
-        date?: string;
-    };
-
     const [isOpen, setIsOpen] = useState(false);
-    const [recentVideos, setRecentVideos] = useState<Video[]>([]);
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
-    const handleVideoPlay = (video: Video) => {
-        // Avoid duplicates
-        setRecentVideos((prev) => {
-            const alreadyExists = prev.find((v) => v.src === video.src);
-            if (!alreadyExists) {
-                return [video, ...prev.slice(0, 4)]; // Keep max 5 recent videos
-            }
-            return prev;
-        });
-    };
+    const { videoData, videos } = useContext(VideoContext);
+
 
     useEffect(() => {
         videoRefs.current.forEach((video) => {
@@ -42,7 +27,12 @@ const Dashboard = () => {
                 return () => clearTimeout(stopAfter5Sec);
             }
         });
-    }, []);
+    }, [videos]);
+
+    const sortedVideos = [...videos].sort((a, b) => {
+        return new Date(b.date || "").getTime() - new Date(a.date || "").getTime();
+    });
+
 
     return (
         <>
@@ -59,10 +49,10 @@ const Dashboard = () => {
                             <Link to="/" className="hover:underline">Add Athletes</Link>
                             <Link to="/" className="hover:underline">Settings</Link>
                             <Link
-                                to="/login"
+                                to="/dashboard"
                                 className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition"
                             >
-                                Coach Smith
+                                {videoData.athleteName || "Coach Smith"}
                             </Link>
                         </div>
 
@@ -82,7 +72,7 @@ const Dashboard = () => {
                         <Link to="/" className="hover:underline">Add Athletes</Link>
                         <Link to="/" className="hover:underline">Settings</Link>
                         <button className="text-white bg-[#F97316] px-4 py-1.5 rounded-sm font-semibold shadow hover:bg-white hover:text-[#1E3A8A] transition">
-                            Coach Smith
+                            {videoData.athleteName || "Coach Smith"}
                         </button>
                     </div>
                 )}
@@ -104,12 +94,12 @@ const Dashboard = () => {
                     </div>
 
                     <div className="mt-6 w-full flex flex-wrap gap-6">
-                        {recentVideos.length > 0 ? (
-                            recentVideos.map((video, index) => (
+                        {sortedVideos.length > 0 ? (
+                            sortedVideos.map((video, index) => (
                                 <div key={index} className="w-80 h-60 p-4 rounded-lg shadow-md bg-white">
                                     <video
                                         src={video.src}
-                                        className="w-full aspect-video rounded"
+                                        className="w-full h-40 object-cover rounded"
                                         controls
                                     />
                                     <p className="mt-2 text-lg font-semibold text-[#333333]">{video.title}</p>
@@ -128,26 +118,25 @@ const Dashboard = () => {
                     </div>
 
                     <div className="mt-8 w-full flex flex-wrap gap-6">
-                        {videoData.length > 0 ? (
-                            videoData.map((video, index) => (
-                                <div key={index} className="w-80 h-60 p-4 rounded-lg shadow-lg bg-white">
-                                    <video
-                                        ref={(el) => {
-                                            videoRefs.current[index] = el;
-                                        }}
-                                        src={video.src}
-                                        className="w-full aspect-video rounded"
-                                        muted
-                                        playsInline
-                                        onPlay={() => handleVideoPlay(video)}
-                                    />
-                                    <p className="mt-2 text-lg font-semibold text-[#333333]">{video.title}</p>
-                                    <p className="text-sm text-gray-400">{video.date}</p>
-                                </div>
-                            ))
+                        {sortedVideos.length > 0 ? (
+                            <div className="w-80 h-60 p-4 rounded-lg shadow-lg bg-white">
+                                <video
+                                    ref={(el: HTMLVideoElement | null) => {
+                                        videoRefs.current[0] = el;
+                                    }}
+                                    src={sortedVideos[0].src}
+                                    className="w-full aspect-video rounded"
+                                    muted
+                                    playsInline
+                                />
+                                <p className="mt-2 text-lg font-semibold text-[#333333]">{sortedVideos[0].title}</p>
+                                <p className="text-sm text-gray-400">{sortedVideos[0].date}</p>
+                            </div>
                         ) : (
-                            <div className="text-center text-gray-500 mt-10">Loading video...</div>
+                            <p className="text-sm text-gray-400">No uploaded video yet.</p>
                         )}
+
+
                     </div>
                 </div>
             </div>

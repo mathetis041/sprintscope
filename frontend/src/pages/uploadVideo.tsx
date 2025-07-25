@@ -1,7 +1,8 @@
 import { Menu, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { VideoContext, type VideoItem, useVideoContext } from "../useContext/videoContext";
 
 const UploadVideo = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +10,11 @@ const UploadVideo = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
-    // Form states
-    const [videoTitle, setVideoTitle] = useState("");
-    const [athleteName, setAthleteName] = useState("");
-    const [videoDate, setVideoDate] = useState("");
-    const [note, setNote] = useState("");
-    const [videoFile, setVideoFile] = useState<File | null>(null);
+
+    // from the context i created
+    const { videoData, setVideoData } = useContext(VideoContext);
+    const { setVideos, videos } = useVideoContext();
+
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -32,39 +32,62 @@ const UploadVideo = () => {
         setDragActive(false);
         const files = e.dataTransfer.files;
         if (files.length) {
-            setVideoFile(files[0]);
+            setVideoData({ videoFile: files[0] });
         }
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (files && files.length) {
-            setVideoFile(files[0]);
+        const file = e.target.files?.[0];
+        if (file) {
+            setVideoData({ videoFile: file });
         }
     };
 
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const { videoTitle, athleteName, videoDate, note, videoFile } = videoData;
+
 
         if (!videoTitle || !athleteName || !videoDate || !videoFile) {
             alert("Please complete all required fields and upload a video.");
             return;
         }
+        const videoURL = URL.createObjectURL(videoFile);
 
-        const videoData = {
+        const newVideo: VideoItem = {
+            src: videoURL,
+            title: videoTitle,
+            athlete: athleteName,
+            date: videoDate,
+        };
+
+        // Save to localStorage for persistence
+        const existingData = JSON.parse(localStorage.getItem("athleteVideos") || "[]");
+        const newLocalItem = {
             videoTitle,
             athleteName,
             videoDate,
             note,
             videoFileName: videoFile.name,
-            videoURL: URL.createObjectURL(videoFile),
+            videoURL,
         };
+        localStorage.setItem("athleteVideos", JSON.stringify([...existingData, newLocalItem]));
 
-        // Save to localStorage (or send to backend here)
-        const existingData = JSON.parse(localStorage.getItem("athleteVideos") || "[]");
-        localStorage.setItem("athleteVideos", JSON.stringify([...existingData, videoData]));
+        // Update context state
+        setVideos([...videos, newVideo]);
 
-        navigate("/dashboard/athletes/videos");
+
+        setVideoData({
+            videoTitle: "",
+            athleteName: "",
+            videoDate: "",
+            note: "",
+            videoFile: null,
+        })
+
+        navigate("/dashboard");
     };
 
     return (
@@ -133,9 +156,9 @@ const UploadVideo = () => {
                         onChange={handleFileChange}
                         className="hidden"
                     />
-                    {videoFile && (
+                    {videoData.videoFile && (
                         <p className="text-sm text-green-600 mt-2">
-                            Selected: {videoFile.name}
+                            Selected: {videoData.videoFile.name}
                         </p>
                     )}
                 </div>
@@ -146,30 +169,33 @@ const UploadVideo = () => {
                         <label className="block text-xl font-medium text-[#333333]">Video Title</label>
                         <input
                             type="text"
-                            value={videoTitle}
-                            onChange={(e) => setVideoTitle(e.target.value)}
+                            name="videoTitle"
+                            value={videoData.videoTitle}
+                            onChange={(e) => setVideoData({ videoTitle: e.target.value })}
                             placeholder="e.g. Sarah Ade final 100m"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] focus:border-[#93C5FD] p-5"
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] focus:border-[#93C5FD] p-5 placeholder-gray-400"
                         />
                     </div>
 
                     <div>
                         <label className="block text-xl font-medium  text-[#333333]">Select Athlete</label>
                         <input
+                            name="athleteName"
                             type="text"
-                            value={athleteName}
-                            onChange={(e) => setAthleteName(e.target.value)}
+                            value={videoData.athleteName}
+                            onChange={(e) => setVideoData({ athleteName: e.target.value })}
                             placeholder="Sarah Ade"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] focus:border-[#93C5FD] p-5"
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] placeholder-gray-400 focus:border-[#93C5FD] p-5"
                         />
                     </div>
 
                     <div>
                         <label className="block text-xl font-medium  text-[#333333]">Video Date</label>
                         <input
+                            name="videoDate"
                             type="date"
-                            value={videoDate}
-                            onChange={(e) => setVideoDate(e.target.value)}
+                            value={videoData.videoDate}
+                            onChange={(e) => setVideoData({ videoDate: e.target.value })}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] focus:border-[#93C5FD] p-5"
                         />
                     </div>
@@ -177,10 +203,11 @@ const UploadVideo = () => {
                     <div>
                         <label className="block text-xl font-medium  text-[#333333]">Note (optional)</label>
                         <textarea
-                            value={note}
-                            onChange={(e) => setNote(e.target.value)}
+                            name="note"
+                            value={videoData.note}
+                            onChange={(e) => setVideoData({ note: e.target.value })}
                             placeholder="Any additional note"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] focus:border-[#93C5FD] p-5"
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#93C5FD] placeholder-gray-400 focus:border-[#93C5FD] p-5"
                             rows={4}
                         />
                     </div>
