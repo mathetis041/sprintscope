@@ -103,7 +103,7 @@ const Dashboard = () => {
                                         controls
                                     />
                                     <p className="mt-2 text-lg font-semibold text-[#333333]">{video.title}</p>
-                                    <p className="text-sm text-gray-400">{video.date}</p>
+                                    <p className="text-sm text-gray-400">Uploaded {video.date}</p>
                                 </div>
                             ))
                         ) : (
