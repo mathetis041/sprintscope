@@ -81,7 +81,7 @@ const Login: React.FC = () => {
                                 <input type={showPassword ? 'text' : 'password'}
                                     id="password"
                                     value={password}
-                                    placeholder="password"
+                                    placeholder="Password"
                                     onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setPasswordWarning("")}
                                     className="w-full placeholder:text-gray-500 px-3 py-2 border text-sm rounded-md border-none focus:outline-none"
